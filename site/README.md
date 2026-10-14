@@ -17,6 +17,7 @@ in the live product, replies go to the host. `noor/page.html` is the same page w
 
 ## Shahi invitation (royal)
 
-`shahi/index.html` is a flower-free, emerald-and-gold template: palace doors with a crest that open
-with one tap, gold dust, a self-drawing crest and art-deco corners, countdown, events with
-Add to Calendar (Google and Outlook), dress code and RSVP. `shahi/page.html` is the publishing copy.
+`shahi/index.html` is a flower-free, ruby-and-gold template. A gold line-drawn Mughal palace draws
+itself at night; one tap on the crest at its gate zooms you through the glowing arch into the
+invitation. Inside: a palace-arch frame, palace skylines between sections, gold dust, countdown,
+events with Add to Calendar (Google and Outlook), dress code and RSVP. `shahi/page.html` is the publishing copy.
