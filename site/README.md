@@ -14,3 +14,9 @@ WhatsApp and RSVP buttons show a toast; nothing is wired to a backend yet.
 ten cards (cover, names, invitation, countdown, events, families, story, photos, RSVP, thank you).
 Tap the right side or use the arrow keys to move on. The RSVP only shows a confirmation here;
 in the live product, replies go to the host. `noor/page.html` is the same page without the document wrapper, for publishing.
+
+## Shahi invitation (royal)
+
+`shahi/index.html` is a flower-free, emerald-and-gold template: palace doors with a crest that open
+with one tap, gold dust, a self-drawing crest and art-deco corners, countdown, events with
+Add to Calendar (Google and Outlook), dress code and RSVP. `shahi/page.html` is the publishing copy.
