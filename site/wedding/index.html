@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Two sample wedding invitations by Bulawa: Noor, florals in burgundy and cream, and Shahi, a ruby palace in gold.">
+<meta name="theme-color" content="#140A0E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bulawa · Sample Wedding Invitations">
+<meta property="og:description" content="Open Noor, florals in burgundy and cream, or Shahi, a ruby palace in gold.">
+<title>Bulawa Wedding Samples</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Montserrat:wght@500;600&family=Pinyon+Script&family=Playfair+Display:ital@1&display=swap">
+<style>
+/* Two doors into two invitations: each card wears its own template's paper, ink and type. */
+:root {
+  --ground: #140A0E;
+  --ink: #F4EBD9;
+  --muted: rgba(244, 235, 217, .66);
+  --noor-paper: #F4EDE0;
+  --noor-ink: #610B14;
+  --noor-gold: #A68B5B;
+  --shahi-ruby: #45091A;
+  --shahi-gold: #C9A45C;
+  --shahi-ivory: #F4EBD9;
+  --foil: linear-gradient(110deg, #8C6A2F 0%, #C9A45C 18%, #F3DFA2 32%, #FFF6D6 40%, #C9A45C 52%, #8C6A2F 66%, #D9B96E 82%, #F3DFA2 100%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  min-height: 100vh; min-height: 100svh;
+  background: radial-gradient(110% 70% at 50% 0%, #2A1219, var(--ground));
+  color: var(--ink); font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  padding: calc(48px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(48px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  display: flex; flex-direction: column; align-items: center; gap: 36px;
+}
+header { text-align: center; max-width: 520px; }
+.brand { font-family: "Cinzel", Georgia, serif; font-size: .72rem; letter-spacing: .42em; text-transform: uppercase; color: var(--shahi-gold); }
+h1 { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2.2rem, 8vw, 3rem); line-height: 1.1; margin-top: 12px; text-wrap: balance; }
+header p { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.15rem; color: var(--muted); margin-top: 10px; }
+
+.cards { display: grid; gap: 22px; width: 100%; max-width: 860px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .cards { grid-template-columns: 1fr 1fr; } }
+.card {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  min-height: 420px; padding: 44px 26px; text-decoration: none; overflow: hidden; border-radius: 6px;
+  transition: transform .4s cubic-bezier(.2, .8, .2, 1), box-shadow .4s ease;
+}
+.card:hover, .card:focus-visible { transform: translateY(-6px); }
+.card:focus-visible { outline: 2px solid var(--shahi-gold); outline-offset: 4px; }
+.card::before { content: ""; position: absolute; inset: 12px; pointer-events: none; border: 1px solid; }
+.card::after { content: ""; position: absolute; inset: 18px; pointer-events: none; border: 1px solid; opacity: .45; }
+.kicker { font-size: .6rem; font-weight: 600; letter-spacing: .34em; text-transform: uppercase; }
+.couple { font-size: 1.05rem; margin-top: 14px; }
+.cta { margin-top: 26px; font-size: .64rem; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; padding: 12px 20px; border: 1px solid; }
+
+.noor { background: radial-gradient(120% 80% at 50% 30%, #FBF6EC, var(--noor-paper) 60%, #E7DAC1); color: var(--noor-ink); box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+.noor::before, .noor::after { border-color: var(--noor-gold); }
+.noor .name { font-family: "Pinyon Script", cursive; font-size: 4.4rem; line-height: 1.1; margin-top: 8px; }
+.noor .couple { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; }
+.noor .cta { border-color: var(--noor-ink); }
+.noor:hover .cta { background: var(--noor-ink); color: var(--noor-paper); }
+.roses { display: flex; gap: 4px; margin-bottom: 18px; }
+.roses i { display: block; width: 22px; height: 22px; border-radius: 50%; }
+.roses i:nth-child(1) { background: radial-gradient(circle at 50% 45%, #5E0A16 0 22%, #9E1C2E 23% 48%, #6A0D1A 49%); }
+.roses i:nth-child(2) { width: 30px; height: 30px; margin-top: -4px; background: radial-gradient(circle at 50% 45%, #AE625B 0 20%, #EDB7AE 21% 50%, #D98A80 51%); }
+.roses i:nth-child(3) { background: radial-gradient(circle at 50% 45%, #BFA374 0 22%, #F1E6D0 23% 50%, #D5C095 51%); }
+
+.shahi { background: radial-gradient(110% 80% at 50% 85%, #8A1530, var(--shahi-ruby) 55%, #1E030A); color: var(--shahi-ivory); box-shadow: 0 24px 60px rgba(0, 0, 0, .55); }
+.shahi::before, .shahi::after { border-color: var(--shahi-gold); }
+.shahi .kicker { color: #F3DFA2; }
+.shahi .name {
+  font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: 4rem; line-height: 1.15; margin-top: 8px;
+  background: var(--foil); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: foil 7s linear infinite;
+}
+@keyframes foil { from { background-position: 0 0; } to { background-position: -220% 0; } }
+.shahi .couple { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; color: rgba(244, 235, 217, .8); }
+.shahi .cta { border-color: var(--shahi-gold); color: #F3DFA2; }
+.shahi:hover .cta { background: var(--shahi-gold); color: #1E030A; }
+.skyline { width: 150px; height: auto; margin-bottom: 16px; overflow: visible; }
+.skyline path { fill: none; stroke: var(--shahi-gold); stroke-width: 1; }
+
+footer { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); text-align: center; }
+footer a { color: var(--shahi-gold); text-underline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .shahi .name { animation: none; } .card { transition: none; } }
+</style>
+
+<header>
+  <p class="brand">Bulawa</p>
+  <h1>Sample wedding invitations</h1>
+  <p>Open one on your phone to see it the way your guests will.</p>
+</header>
+
+<main class="cards">
+  <a class="card noor" href="/wedding/noor">
+    <span class="roses" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="kicker">Florals in burgundy and cream</span>
+    <span class="name">Noor</span>
+    <span class="couple">Ayesha &amp; Imran · 20 December 2026</span>
+    <span class="cta">Open invitation</span>
+  </a>
+  <a class="card shahi" href="/wedding/shahi">
+    <svg class="skyline" viewBox="0 0 300 70" aria-hidden="true">
+      <path d="M0 64 H300"/>
+      <path d="M118 64 V44 H182 V64 M124 44 C 112 28, 140 18, 150 6 C 160 18, 188 28, 176 44"/>
+      <path d="M150 6 V0"/>
+      <path d="M140 64 V54 C 140 50, 150 46, 150 44 C 150 46, 160 50, 160 54 V64"/>
+      <path d="M70 64 V48 H96 V64 M72 48 C 70 40, 80 36, 83 30 C 86 36, 96 40, 94 48"/>
+      <path d="M204 64 V48 H230 V64 M206 48 C 204 40, 214 36, 217 30 C 220 36, 230 40, 228 48"/>
+      <path d="M40 64 V30 H46 V64 M38 30 C 38 24, 43 22, 43 18 C 43 22, 48 24, 48 30"/>
+      <path d="M254 64 V30 H260 V64 M252 30 C 252 24, 257 22, 257 18 C 257 22, 262 24, 262 30"/>
+    </svg>
+    <span class="kicker">A ruby palace in gold</span>
+    <span class="name">Shahi</span>
+    <span class="couple">Zoya &amp; Rayyan · 12 February 2027</span>
+    <span class="cta">Open invitation</span>
+  </a>
+</main>
+
+<footer>Made with Bulawa · <a href="/">See all templates</a></footer>
+</html>

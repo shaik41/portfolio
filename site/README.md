@@ -1,23 +1,37 @@
-# Bulawa landing page (rough mockup)
+# Bulawa site
 
-A single-file mockup of the Bulawa invitations site: hero with a tap-to-open envelope demo,
-template gallery with filters, feature grid, pricing, and the order steps.
+Static site, no build tools. Deploy the `site/` folder as is.
 
-- `index.html` — open directly in a browser.
-- `page.html` — the same page without the document wrapper (used for publishing as a Claude artifact).
+| URL | File | What it is |
+| --- | --- | --- |
+| `/` | `index.html` | Bulawa landing page (rough mockup) |
+| `/wedding` | `wedding/index.html` | Picker for the two sample invitations |
+| `/wedding/noor` | `wedding/noor/index.html` | Noor: burgundy and cream florals, gatefold doors, petals |
+| `/wedding/shahi` | `wedding/shahi/index.html` | Shahi: a gold line-drawn palace in ruby, gold dust |
 
-WhatsApp and RSVP buttons show a toast; nothing is wired to a backend yet.
+## Editing
 
-## Noor invitation (tap-through)
+Each page has a `page.html` (the copy published as a Claude artifact) and an `index.html`
+(the same page wrapped for hosting, with link-preview tags for WhatsApp). Edit `page.html`,
+then rebuild the wrappers from the repo root:
 
-`noor/index.html` is a full tap-through invitation built on the Noor template:
-ten cards (cover, names, invitation, countdown, events, families, story, photos, RSVP, thank you).
-Tap the right side or use the arrow keys to move on. The RSVP only shows a confirmation here;
-in the live product, replies go to the host. `noor/page.html` is the same page without the document wrapper, for publishing.
+```
+python3 scripts/build_pages.py
+```
 
-## Shahi invitation (royal)
+`wedding/index.html` is hand-written and has no `page.html`.
 
-`shahi/index.html` is a flower-free, ruby-and-gold template. A gold line-drawn Mughal palace draws
-itself at night; one tap on the crest at its gate zooms you through the glowing arch into the
-invitation. Inside: a palace-arch frame, palace skylines between sections, gold dust, countdown,
-events with Add to Calendar (Google and Outlook), dress code and RSVP. `shahi/page.html` is the publishing copy.
+## Deploying to Vercel
+
+Either:
+
+- **Import from GitHub:** in Vercel, Add New → Project → import this repo, set **Root Directory** to `site`,
+  leave the framework as **Other** with no build command, and deploy. Every push then redeploys.
+- **From the command line:** with a Vercel token in `VERCEL_TOKEN`, run
+  `npx vercel deploy site --prod --yes --token "$VERCEL_TOKEN"`.
+
+`vercel.json` turns on clean URLs (`/wedding/noor` rather than `/wedding/noor/index.html`), and
+`.vercelignore` keeps the `page.html` copies and this README out of the deployment.
+
+RSVP and Add to Calendar work without a backend: the RSVP shows a confirmation only, and the
+calendar buttons open Google Calendar or Outlook with the event filled in.
