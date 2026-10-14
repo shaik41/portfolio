@@ -2,466 +2,459 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Noor Invitation</title>
+<title>Noor Wedding Invitation</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
-/* Noor: arches, a gold star lattice and a plum night sky. One look, so it ignores the viewer's theme.
-   Each card is a full screen. Tap the right side to go on, the left side to go back, or use the arrow keys. */
+/* Noor, in the classic burgundy-and-cream style: a wax-seal envelope to open, then one long scroll
+   of centred sections that fade up as they arrive. A scratch card reveals the date.
+   Palette and type follow the reference design; the ornaments, copy and sample details are our own. */
 :root {
-  --plum: #1E0A26;
-  --plum-2: #2A1033;
-  --plum-3: #46194F;
-  --gold: #FFC24A;
-  --gold-soft: rgba(255, 194, 74, .45);
-  --cream: #FFF4E6;
-  --cream-muted: rgba(255, 244, 230, .72);
-  --pink: #FF5FA8;
-  --f-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --f-body: "Figtree", "Helvetica Neue", system-ui, sans-serif;
-  --f-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
-  --f-urdu: "Noto Nastaliq Urdu", "Geeza Pro", serif;
-  color-scheme: dark;
+  --bg: #E8DFCD;
+  --paper: #F9F6F0;
+  --ink: #610B14;
+  --ink-deep: #4A0A10;
+  --gold: #A68B5B;
+  --gold-bright: #D4AF37;
+  --champagne: #E6D7B8;
+  --blush: #F4C2C2;
+  --line: rgba(97, 11, 20, .3);
+  --glass: rgba(255, 255, 255, .55);
+  --f-cinzel: "Cinzel", "Trajan Pro", Georgia, serif;
+  --f-serif: "Cormorant Garamond", "Garamond", Georgia, serif;
+  --f-sans: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --f-arabic: "Amiri", "Scheherazade New", "Geeza Pro", serif;
+  color-scheme: light;
 }
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); }
 body {
-  background: #0D0412;
-  color: var(--cream);
-  font-family: var(--f-body);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--f-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
+body.locked { overflow: hidden; height: 100%; }
+a { color: inherit; }
 button, input, select { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
-.frame {
-  position: relative;
-  width: min(430px, 100vw);
-  height: min(920px, 100vh);
-  height: min(920px, 100dvh);
-  overflow: hidden;
-  background:
-    radial-gradient(120% 55% at 50% 0%, var(--plum-3) 0%, transparent 60%),
-    radial-gradient(100% 60% at 50% 110%, #5B1A45 0%, transparent 65%),
-    var(--plum);
-  border-radius: 36px;
-  touch-action: pan-y;
-  user-select: none;
-  -webkit-user-select: none;
+/* Cover envelope */
+.cover {
+  position: fixed; inset: 0; z-index: 100;
+  background: radial-gradient(120% 80% at 50% 40%, #F3EBDB 0%, #D9CBAE 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px;
+  padding: env(safe-area-inset-top, 0px) 16px env(safe-area-inset-bottom, 0px);
+  transition: opacity 1s ease, visibility 0s linear 1s;
 }
-@media (max-width: 500px) {
-  .frame { width: 100vw; height: 100vh; height: 100dvh; border-radius: 0; }
+.cover.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.env {
+  position: relative; width: min(330px, 84vw); aspect-ratio: 3 / 2;
+  filter: drop-shadow(0 18px 24px rgba(74, 10, 16, .25));
 }
-
-/* Progress bar */
-.progress {
-  position: absolute; z-index: 10; left: 16px; right: 16px;
-  top: calc(14px + env(safe-area-inset-top, 0px));
-  display: flex; gap: 4px;
+.env-back, .env-front, .env-flap { position: absolute; inset: 0; }
+.env-back { background: #EFE6D4; border-radius: 4px; border: 1px solid #CDBB98; }
+.card {
+  position: absolute; left: 6%; right: 6%; top: 8%; height: 84%; z-index: 2;
+  background: var(--paper); border-radius: 3px; border: 1px solid #D9CBB0;
+  display: grid; place-items: center; text-align: center; padding: 10px;
+  transition: transform 1s cubic-bezier(.2, .8, .2, 1);
 }
-.progress button {
-  flex: 1; height: 16px; background: none; border: 0; padding: 0; cursor: pointer; display: grid; align-items: center;
+.card .inner { border: 1px solid var(--gold); padding: 16px 10px; width: 100%; height: 100%; display: grid; place-items: center; align-content: center; gap: 4px; }
+.card p { font-family: var(--f-cinzel); font-size: .6rem; letter-spacing: .24em; color: var(--ink); text-transform: uppercase; }
+.card b { font-family: var(--f-serif); font-style: italic; font-weight: 600; font-size: 1.5rem; color: var(--ink); }
+.env-front {
+  z-index: 3; background: linear-gradient(180deg, #F4EEE2, #E9DDC6);
+  clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+  border-radius: 4px;
 }
-.progress button::before {
-  content: ""; height: 3px; border-radius: 3px; background: rgba(255, 244, 230, .22); transition: background .3s ease;
+.env-flap {
+  z-index: 4; background: linear-gradient(180deg, #EEE4D0, #E2D4B9);
+  clip-path: polygon(0 0, 100% 0, 50% 60%); transform-origin: top center;
+  transition: transform .9s ease .2s, z-index 0s linear 1.1s;
+  border-radius: 4px 4px 0 0;
 }
-.progress button.done::before { background: var(--gold); }
-
-/* Cards */
-.slide {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center;
-  padding: calc(64px + env(safe-area-inset-top, 0px)) 28px calc(92px + env(safe-area-inset-bottom, 0px));
-  opacity: 0; visibility: hidden;
-  transition: opacity .5s ease, visibility 0s linear .5s;
-}
-.slide.on { opacity: 1; visibility: visible; transition: opacity .5s ease; }
-.slide.on .rv { animation: up .8s cubic-bezier(.2, .8, .2, 1) both; animation-delay: var(--d, 0s); }
-@keyframes up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-
-.pattern {
-  position: absolute; inset: 0; pointer-events: none; opacity: .9;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 3 L27 17 L41 22 L27 27 L22 41 L17 27 L3 22 L17 17 Z' fill='none' stroke='%23FFC24A' stroke-width='0.9' opacity='0.22'/%3E%3C/svg%3E");
-  background-size: 44px 44px;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
-}
-.arch {
-  position: absolute; inset: 56px 22px 84px; pointer-events: none;
-  border: 1.5px solid var(--gold); border-radius: 999px 999px 22px 22px; opacity: .75;
-}
-.arch::before {
-  content: ""; position: absolute; inset: 7px;
-  border: 1px solid var(--gold); border-radius: 999px 999px 16px 16px; opacity: .4;
-}
-
-.kicker { font-size: .66rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin: 0; }
-.lead { color: var(--cream-muted); font-size: 1rem; max-width: 30ch; margin: 0 auto; }
-.serif-xl { font-family: var(--f-serif); font-style: italic; font-weight: 400; font-size: 3.6rem; line-height: .96; margin: .2rem 0; }
-.serif-l { font-family: var(--f-serif); font-style: italic; font-weight: 400; font-size: 2.3rem; line-height: 1; margin: 0; }
-.amp { color: var(--pink); }
-h2.title { font-family: var(--f-display); font-weight: 800; font-size: 1.9rem; letter-spacing: -.02em; margin: 0 0 1rem; text-wrap: balance; }
-.urdu { font-family: var(--f-urdu); color: var(--gold); direction: rtl; font-size: 1.65rem; line-height: 2.2; margin: 0; }
-.bism { font-family: var(--f-urdu); color: var(--gold); font-size: 1.35rem; line-height: 2; direction: rtl; margin: 0; }
-
-.stack { display: flex; flex-direction: column; align-items: center; gap: 14px; position: relative; z-index: 1; }
-
 .seal {
-  position: relative; border: 0; cursor: pointer; border-radius: 999px; padding: 14px 26px;
-  background: radial-gradient(circle at 35% 30%, #FF7AB8, #C40F68 75%);
-  color: #FFF; font-family: var(--f-display); font-weight: 800; font-size: .95rem; letter-spacing: .04em;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, .35), inset 0 0 0 3px rgba(255, 255, 255, .15);
+  position: absolute; z-index: 6; left: 50%; top: 56%; width: 66px; height: 66px; border-radius: 50%;
+  transform: translate(-50%, -50%); border: 0; cursor: pointer;
+  background: radial-gradient(circle at 36% 32%, #8A1B27, #4A0A10 72%);
+  color: var(--champagne); font-family: var(--f-cinzel); font-size: .78rem; font-weight: 600; letter-spacing: .04em;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .3), inset 0 0 0 3px rgba(212, 175, 55, .35);
+  transition: opacity .5s ease, transform .5s ease;
 }
 .seal::after {
-  content: ""; position: absolute; inset: -7px; border-radius: 999px; border: 1.5px solid var(--gold);
-  animation: ping 1.8s ease-out infinite; pointer-events: none;
+  content: ""; position: absolute; inset: -8px; border-radius: 50%; border: 1.5px solid var(--gold);
+  opacity: .6; animation: ping 2.2s ease-out infinite; pointer-events: none;
 }
-@keyframes ping { from { transform: scale(.92); opacity: 1; } to { transform: scale(1.25); opacity: 0; } }
+@keyframes ping { from { transform: scale(.9); opacity: .7; } to { transform: scale(1.3); opacity: 0; } }
+.cover-cta {
+  font-family: var(--f-sans); font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--ink);
+  background: none; border: 0; cursor: pointer; padding: 10px 14px; font-weight: 600;
+}
+.cover-cta:hover { color: var(--ink-deep); }
+
+.cover.opening .seal { opacity: 0; transform: translate(-50%, -50%) scale(.4); pointer-events: none; }
+.cover.opening .env-flap { transform: rotateX(180deg); z-index: 1; }
+.cover.opening .card { transform: translateY(-62%); }
+.cover.opening .cover-cta { opacity: 0; transition: opacity .3s ease; }
+
+/* Page */
+main { max-width: 480px; margin: 0 auto; padding: 0 0 80px; }
+section {
+  position: relative; text-align: center;
+  padding: 72px 28px;
+}
+section + section::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: min(180px, 55%); height: 1px; background: var(--line);
+}
+.frame-art {
+  position: absolute; inset: 14px; pointer-events: none; border: 1px solid rgba(166, 139, 91, .45);
+}
+.corner { position: absolute; width: 74px; height: 74px; opacity: .85; }
+.corner.tl { top: 8px; left: 8px; }
+.corner.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+.corner.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+.corner.br { bottom: 8px; right: 8px; transform: scale(-1, -1); }
+
+/* Reveal on scroll (only once the script has run) */
+.js .rv { opacity: 0; transform: translateY(22px); transition: opacity 1s ease, transform 1s cubic-bezier(.2, .8, .2, 1); }
+.js .rv.in { opacity: 1; transform: none; }
+.js .rv.d1 { transition-delay: .12s; }
+.js .rv.d2 { transition-delay: .24s; }
+.js .rv.d3 { transition-delay: .36s; }
+
+.small { font-family: var(--f-sans); font-size: .58rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 600; line-height: 1.7; }
+.bism { font-family: var(--f-arabic); font-size: 1.7rem; line-height: 1.6; color: var(--ink); direction: rtl; }
+.bism-en { font-family: var(--f-serif); font-style: italic; font-size: 1.05rem; line-height: 1.6; margin: 6px auto 0; max-width: 320px; }
+.lead { font-family: var(--f-serif); font-style: italic; font-size: 1.12rem; line-height: 1.6; max-width: 340px; margin: 0 auto; }
+.name { font-family: var(--f-cinzel); font-weight: 500; font-size: 2.1rem; letter-spacing: .2em; text-transform: uppercase; line-height: 1.2; }
+.amp { font-family: var(--f-serif); font-style: italic; font-size: 2.2rem; line-height: 1; margin: 10px 0; display: block; }
+.urdu-name { font-family: var(--f-arabic); font-size: 1.5rem; line-height: 1.8; direction: rtl; margin-top: 12px; }
+.parents { font-family: var(--f-serif); font-weight: 600; font-size: 1.02rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.5; }
+.rel { font-family: var(--f-sans); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; opacity: .85; margin-bottom: 4px; display: block; }
+.heart { display: flex; align-items: center; justify-content: center; gap: 14px; max-width: 180px; margin: 34px auto; }
+.heart i { flex: 1; height: 1px; background: var(--ink); opacity: .4; }
+.heart span { font-size: 1rem; line-height: 1; }
+
+/* Scroll cue */
+.cue { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 56px; }
+.cue .bar { width: 20px; height: 38px; border: 2px solid var(--ink); border-radius: 12px; position: relative; opacity: .45; }
+.cue .bar::after {
+  content: ""; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 4px; height: 8px;
+  background: var(--ink); border-radius: 2px; animation: bounce 1.6s infinite ease-in-out;
+}
+@keyframes bounce { 0%, 100% { transform: translate(-50%, 0); opacity: 1; } 50% { transform: translate(-50%, 10px); opacity: .3; } }
+.cue span { font-family: var(--f-sans); font-size: .55rem; letter-spacing: .3em; text-transform: uppercase; font-weight: 600; opacity: .8; }
+
+/* Scratch card */
+.discover { font-family: var(--f-sans); font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 600; margin-bottom: 26px; }
+.scratch {
+  position: relative; width: min(300px, 88vw); height: 92px; margin: 0 auto; border-radius: 16px;
+  background: #EFE3CF; border: 1.5px solid #B49A72; box-shadow: 0 8px 24px rgba(97, 11, 20, .15);
+  overflow: hidden; display: grid; place-items: center;
+}
+.scratch-date { font-family: var(--f-cinzel); font-size: 1.2rem; font-weight: 600; letter-spacing: .14em; white-space: nowrap; }
+.scratch-date sup { font-size: .6em; vertical-align: super; line-height: 0; }
+.scratch canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; transition: opacity .4s ease; border-radius: 16px; }
+.scratch canvas.done { opacity: 0; pointer-events: none; }
+.scratch-hint { margin-top: 14px; font-family: var(--f-serif); font-style: italic; font-size: 1rem; opacity: .8; }
+.scratch-hint.hide { opacity: 0; transition: opacity .4s ease; }
 
 /* Countdown */
-.count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 320px; }
-.count div { border: 1px solid var(--gold-soft); border-radius: 16px; padding: 12px 0 10px; background: rgba(255, 255, 255, .04); }
-.count b { display: block; font-family: var(--f-display); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
-.count span { font-size: .58rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cream-muted); }
+.count { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-top: 18px; }
+.count div { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
+.count b { font-family: var(--f-serif); font-weight: 700; font-size: 2.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.count span { font-family: var(--f-sans); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; margin-top: 8px; opacity: .85; }
+.count-title { font-family: var(--f-serif); font-style: italic; font-size: 1.8rem; }
 
 /* Events */
-.events { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 340px; }
-.ev {
-  text-align: left; border: 1px solid var(--gold-soft); border-radius: 22px 22px 14px 14px;
-  padding: 16px 18px; background: rgba(255, 255, 255, .04);
+.events-title { font-family: var(--f-serif); font-style: italic; font-size: 2.2rem; line-height: 1.1; margin-bottom: 26px; }
+.event {
+  background: var(--glass); border-radius: 20px; padding: 24px 20px; margin: 0 auto 18px; max-width: 360px;
+  box-shadow: 0 10px 30px rgba(97, 11, 20, .07);
 }
-.ev .when { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
-.ev h3 { font-family: var(--f-serif); font-style: italic; font-weight: 400; font-size: 1.85rem; line-height: 1; margin: .35rem 0 .45rem; }
-.ev p { margin: 0; font-size: .88rem; color: var(--cream-muted); line-height: 1.45; }
-.ev .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; }
-.ev .dress { font-size: .78rem; color: var(--cream-muted); }
+.event h3 { font-family: var(--f-cinzel); font-weight: 700; font-size: 1.35rem; letter-spacing: .12em; }
+.event .time { font-weight: 600; font-size: 1rem; margin: 8px 0 6px; }
+.event .place { font-size: .95rem; font-weight: 500; line-height: 1.45; margin-bottom: 14px; }
+.event .dress-line { font-family: var(--f-serif); font-style: italic; font-size: .98rem; margin-top: 10px; opacity: .9; }
 .map {
-  font-size: .8rem; font-weight: 700; color: var(--plum); background: var(--gold); text-decoration: none;
-  border-radius: 999px; padding: .4rem .85rem; white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; border: 1px solid var(--ink);
+  border-radius: 999px; text-decoration: none; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  transition: background .25s ease, color .25s ease;
 }
+.map:hover, .map:focus-visible { background: var(--ink); color: var(--bg); }
+.venue-note { font-size: .72rem; font-weight: 600; margin-top: 10px; opacity: .85; }
 
-/* Family */
-.family { display: grid; gap: 22px; width: 100%; max-width: 300px; }
-.family p { margin: 0; font-family: var(--f-serif); font-style: italic; font-size: 1.7rem; line-height: 1.1; }
-.family small { display: block; font-family: var(--f-body); font-style: normal; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cream-muted); margin-top: .3rem; }
-
-/* Story */
-.story { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 320px; text-align: left; display: grid; gap: 18px; }
-.story li { position: relative; padding-left: 26px; }
-.story li::before { content: ""; position: absolute; left: 0; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(255, 194, 74, .18); }
-.story li::after { content: ""; position: absolute; left: 5px; top: 22px; bottom: -22px; width: 1px; background: var(--gold-soft); }
-.story li:last-child::after { display: none; }
-.story b { display: block; font-family: var(--f-display); font-size: .78rem; letter-spacing: .12em; color: var(--gold); text-transform: uppercase; }
-.story span { font-size: .95rem; color: var(--cream); line-height: 1.45; }
-
-/* Photos: arches with placeholders until the family adds their own */
-.photos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 330px; }
-.photos figure { margin: 0; }
-.photos .ph {
-  aspect-ratio: 3 / 4; border-radius: 999px 999px 14px 14px; border: 1px solid var(--gold-soft);
-  display: grid; place-items: center; font-family: var(--f-serif); font-style: italic; color: var(--cream-muted);
-}
-.photos .ph.a { background: linear-gradient(160deg, #6B2262, #2A1033); }
-.photos .ph.b { background: linear-gradient(160deg, #A8413E, #3A1A3F); }
-.photos .ph.c { background: linear-gradient(160deg, #B8862E, #3A1F2E); }
-.photos figure:nth-child(3) { grid-column: span 2; justify-self: center; width: 60%; }
-.photos figcaption { font-size: .72rem; color: var(--cream-muted); margin-top: 6px; letter-spacing: .04em; }
+/* Dress code carousel */
+.dress-cap { font-family: var(--f-cinzel); font-size: .82rem; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 12px; }
+.dress-lead { font-family: var(--f-serif); font-style: italic; font-size: 1.08rem; line-height: 1.5; max-width: 320px; margin: 0 auto 26px; }
+.carousel { position: relative; overflow: hidden; max-width: 380px; margin: 0 auto; border-radius: 24px; background: var(--glass); box-shadow: 0 10px 30px rgba(97, 11, 20, .07); }
+.track { display: flex; width: 200%; transition: transform .7s cubic-bezier(.25, 1, .5, 1); }
+.slide-card { width: 50%; flex-shrink: 0; padding: 30px 20px 26px; }
+.slide-card h3 { font-family: var(--f-cinzel); font-weight: 600; font-size: 1.9rem; letter-spacing: .06em; }
+.slide-card .mood { font-family: var(--f-sans); font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; margin: 6px 0 24px; opacity: .85; }
+.swatches { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 22px; }
+.swatches div { flex: 1; text-align: center; }
+.swatches i { display: block; width: 46px; height: 46px; border-radius: 50%; margin: 0 auto 8px; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, .12); }
+.swatches small { font-family: var(--f-sans); font-size: .5rem; font-weight: 700; letter-spacing: .08em; display: block; }
+.slide-card .date { font-family: var(--f-serif); font-style: italic; font-size: 1.12rem; }
+.dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.dots button { width: 8px; height: 8px; border-radius: 50%; border: 0; background: var(--ink); opacity: .3; cursor: pointer; transition: width .3s ease, opacity .3s ease, border-radius .3s ease; padding: 0; }
+.dots button[aria-current="true"] { width: 24px; border-radius: 4px; opacity: 1; }
 
 /* RSVP */
-form.rsvp { width: 100%; max-width: 320px; display: grid; gap: 14px; text-align: left; }
-form.rsvp label.f { display: grid; gap: 6px; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cream-muted); }
+form.rsvp { max-width: 320px; margin: 0 auto; display: grid; gap: 14px; text-align: left; }
+form.rsvp label { display: grid; gap: 6px; font-family: var(--f-sans); font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; }
 form.rsvp input, form.rsvp select {
-  width: 100%; border: 1px solid var(--gold-soft); border-radius: 14px; padding: 12px 14px;
-  background: rgba(255, 255, 255, .06); color: var(--cream); font-size: 1rem; text-transform: none; letter-spacing: 0;
+  width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--paper);
+  font-family: var(--f-serif); font-size: 1.08rem; letter-spacing: 0; text-transform: none; color: var(--ink);
 }
-form.rsvp select option { background: var(--plum-2); color: var(--cream); }
-fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
-fieldset legend { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 6px; padding: 0; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+fieldset { border: 0; display: grid; gap: 8px; }
+legend { font-family: var(--f-sans); font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .chips input { position: absolute; opacity: 0; pointer-events: none; }
 .chips label {
-  border: 1px solid var(--gold-soft); border-radius: 999px; padding: 8px 14px; font-size: .88rem; cursor: pointer;
+  border: 1px solid var(--ink); border-radius: 999px; padding: 9px 16px; cursor: pointer; font-size: .7rem;
+  letter-spacing: .14em; font-weight: 600; text-transform: uppercase; display: inline-block;
 }
-.chips input:checked + label { background: var(--gold); color: var(--plum); border-color: var(--gold); font-weight: 700; }
-.chips input:focus-visible + label { outline: 2px solid var(--gold); outline-offset: 3px; }
+.chips input:checked + label { background: var(--ink); color: var(--bg); }
+.chips input:focus-visible + label { outline: 2px solid var(--ink); outline-offset: 3px; }
 .submit {
-  margin-top: 4px; border: 0; cursor: pointer; border-radius: 999px; padding: 14px; background: var(--pink);
-  color: var(--plum); font-family: var(--f-display); font-weight: 800; font-size: 1rem;
+  border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 999px; padding: 14px; cursor: pointer;
+  font-family: var(--f-sans); font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; font-weight: 700; margin-top: 4px;
 }
-.thanks { display: none; font-family: var(--f-serif); font-style: italic; font-size: 1.9rem; line-height: 1.15; max-width: 22ch; margin: 0 auto; }
-.thanks.show { display: block; animation: up .6s ease both; }
+.submit:hover { background: var(--ink-deep); }
+.thanks { display: none; font-family: var(--f-serif); font-style: italic; font-size: 1.4rem; line-height: 1.35; max-width: 300px; margin: 0 auto; }
+.thanks.show { display: block; }
 .hide { display: none !important; }
 
-/* Ending */
-.share {
-  border: 1px solid var(--gold); background: transparent; border-radius: 999px; padding: 12px 22px; cursor: pointer;
-  font-weight: 700; color: var(--gold);
-}
-.share-note { font-size: .8rem; color: var(--cream-muted); min-height: 1.2em; margin: 0; }
-.made { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cream-muted); margin-top: 26px; }
+footer { text-align: center; padding: 40px 28px 110px; font-family: var(--f-serif); font-style: italic; font-size: 1rem; }
+footer .made { font-family: var(--f-sans); font-style: normal; font-size: .56rem; letter-spacing: .28em; text-transform: uppercase; margin-top: 14px; opacity: .7; display: block; }
 
-/* Bottom controls */
-.nav {
-  position: absolute; z-index: 10; left: 0; right: 0;
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-  display: flex; justify-content: center; align-items: center; gap: 18px;
+/* Toast for the mock controls */
+.toast {
+  position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 50;
+  transform: translate(-50%, 140%); visibility: hidden; transition: transform .35s ease, visibility 0s linear .35s;
+  background: var(--ink); color: var(--bg); border-radius: 14px; padding: 12px 16px; font-size: .85rem; font-weight: 600;
+  width: max-content; max-width: calc(100vw - 32px); text-align: center;
 }
-.nav button {
-  width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--gold-soft); background: rgba(30, 10, 38, .6);
-  color: var(--gold); cursor: pointer; font-size: 1.2rem; line-height: 1; display: grid; place-items: center;
-}
-.nav button:disabled { opacity: .3; cursor: default; }
-.nav .hint { font-size: .72rem; letter-spacing: .08em; color: var(--cream-muted); min-width: 9ch; }
+.toast.show { transform: translate(-50%, 0); visibility: visible; transition: transform .35s ease; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
-  .seal::after { animation: none; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; transition-delay: 0s !important; }
+  .js .rv { opacity: 1; transform: none; }
 }
 </style>
 
-<div class="frame" id="frame">
-  <div class="progress" id="progress" role="group" aria-label="Go to a card"></div>
+<!-- Ornament: one floral corner, drawn here so no artwork has to be uploaded. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="corner-art" fill="none" stroke="#610B14" stroke-width="1.1" stroke-linecap="round">
+      <path d="M4 70 C 4 36, 36 4, 70 4"/>
+      <path d="M12 62 C 12 40, 40 12, 62 12" stroke-width=".6" opacity=".6"/>
+      <path d="M20 46 C 14 32, 22 22, 34 20 C 28 28, 26 36, 20 46 Z" fill="#610B14" fill-opacity=".18"/>
+      <path d="M46 20 C 34 16, 24 22, 22 34 C 32 30, 40 26, 46 20 Z" fill="#610B14" fill-opacity=".18"/>
+      <circle cx="24" cy="24" r="3.4" fill="#A68B5B" stroke="none"/>
+      <circle cx="10" cy="10" r="2" fill="#610B14" stroke="none"/>
+      <path d="M30 6 C 40 6, 46 12, 46 22" stroke-width=".7" opacity=".7"/>
+    </g>
+  </defs>
+</svg>
 
-  <!-- 0: cover -->
-  <section class="slide on" aria-label="Cover">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="arch" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="bism rv" style="--d:.1s">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
-      <p class="kicker rv" style="--d:.3s">A Nikah invitation</p>
-      <p class="serif-xl rv" style="--d:.45s">You're<br>invited</p>
-      <p class="lead rv" style="--d:.6s">Tap below to open the invitation.</p>
-      <button class="seal rv" style="--d:.9s" type="button" data-next>Tap to open</button>
-    </div>
-  </section>
-
-  <!-- 1: names -->
-  <section class="slide" aria-label="Names">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="arch" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="kicker rv" style="--d:.1s">Together with their families</p>
-      <p class="serif-xl rv" style="--d:.25s">Ayesha <span class="amp">&amp;</span><br>Imran</p>
-      <p class="urdu rv" style="--d:.45s" lang="ur">عائشہ و عمران</p>
-      <p class="lead rv" style="--d:.6s">are getting married</p>
-    </div>
-  </section>
-
-  <!-- 2: the invitation -->
-  <section class="slide" aria-label="Invitation">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="arch" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="kicker rv" style="--d:.1s">Request the pleasure of your company</p>
-      <p class="serif-l rv" style="--d:.25s">at the Nikah of</p>
-      <p class="serif-xl rv" style="--d:.4s">Ayesha<br><span class="amp">&amp;</span> Imran</p>
-      <p class="kicker rv" style="--d:.6s">Sunday · 20 December 2026</p>
-      <p class="lead rv" style="--d:.7s">6:00 pm onwards<br>Al-Noor Hall, Banjara Hills</p>
-    </div>
-  </section>
-
-  <!-- 3: countdown -->
-  <section class="slide" aria-label="Countdown">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="arch" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="kicker rv" style="--d:.1s">Counting down to the Nikah</p>
-      <div class="count rv" style="--d:.3s" id="count" aria-live="off">
-        <div><b data-k="d">--</b><span>days</span></div>
-        <div><b data-k="h">--</b><span>hours</span></div>
-        <div><b data-k="m">--</b><span>mins</span></div>
-        <div><b data-k="s">--</b><span>secs</span></div>
-      </div>
-      <p class="lead rv" style="--d:.5s">Save the date. We'd love to see you there.</p>
-    </div>
-  </section>
-
-  <!-- 4: events -->
-  <section class="slide" aria-label="Events">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="kicker rv" style="--d:.05s">Three days of celebration</p>
-      <div class="events">
-        <article class="ev rv" style="--d:.15s">
-          <p class="when">Friday · 18 Dec · 7:00 pm</p>
-          <h3>Mehndi</h3>
-          <p>Garden Pavilion, Banjara Hills</p>
-          <div class="row"><span class="dress">Dress: yellow and green</span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Garden+Pavilion+Banjara+Hills" target="_blank" rel="noopener">Map</a></div>
-        </article>
-        <article class="ev rv" style="--d:.3s">
-          <p class="when">Sunday · 20 Dec · 6:00 pm</p>
-          <h3>Nikah</h3>
-          <p>Al-Noor Hall, Banjara Hills</p>
-          <div class="row"><span class="dress">Dress: pastels, traditional</span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Al-Noor+Hall+Banjara+Hills" target="_blank" rel="noopener">Map</a></div>
-        </article>
-        <article class="ev rv" style="--d:.45s">
-          <p class="when">Monday · 21 Dec · 8:00 pm</p>
-          <h3>Walima</h3>
-          <p>The Crystal Lawns, Jubilee Hills</p>
-          <div class="row"><span class="dress">Dress: formal, jewel tones</span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=The+Crystal+Lawns+Jubilee+Hills" target="_blank" rel="noopener">Map</a></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5: family -->
-  <section class="slide" aria-label="Families">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="arch" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="kicker rv" style="--d:.1s">With the blessings of</p>
-      <div class="family">
-        <p class="rv" style="--d:.25s">Mr &amp; Mrs Khan<small>Bride's family</small></p>
-        <p class="rv" style="--d:.45s">Mr &amp; Mrs Ali<small>Groom's family</small></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6: story -->
-  <section class="slide" aria-label="Our story">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="stack" style="width:100%">
-      <p class="kicker rv" style="--d:.05s">How it began</p>
-      <h2 class="title rv" style="--d:.15s">A story in three moments</h2>
-      <ol class="story rv" style="--d:.3s">
-        <li><b>2019</b><span>Met at a friend's mehndi, where the dhol would not stop.</span></li>
-        <li><b>2024</b><span>Families met over chai, and the rest was planned.</span></li>
-        <li><b>2026</b><span>A Nikah, a Walima, and one very long dance.</span></li>
-      </ol>
-      <p class="lead rv" style="--d:.5s; font-size:.78rem">Sample story. Your own moments go here.</p>
-    </div>
-  </section>
-
-  <!-- 7: photos -->
-  <section class="slide" aria-label="Photos">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="kicker rv" style="--d:.05s">Moments</p>
-      <div class="photos rv" style="--d:.2s">
-        <figure><div class="ph a">Your photo</div><figcaption>Sana &amp; Faraz</figcaption></figure>
-        <figure><div class="ph b">Your photo</div><figcaption>Family</figcaption></figure>
-        <figure><div class="ph c">Your photo</div><figcaption>The big day</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8: RSVP -->
-  <section class="slide" aria-label="RSVP">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="stack" style="width:100%">
-      <p class="kicker rv" style="--d:.05s">Kindly reply by 1 December</p>
-      <h2 class="title rv" style="--d:.15s">Will you join us?</h2>
-      <form class="rsvp rv" id="rsvp" style="--d:.25s" autocomplete="off">
-        <label class="f" for="rs-name">Your name
-          <input id="rs-name" name="name" type="text" required maxlength="60" placeholder="e.g. Sana Khan">
-        </label>
-        <fieldset>
-          <legend>Which events?</legend>
-          <div class="chips">
-            <input type="checkbox" id="ev-m" name="ev" value="Mehndi"><label for="ev-m">Mehndi</label>
-            <input type="checkbox" id="ev-n" name="ev" value="Nikah" checked><label for="ev-n">Nikah</label>
-            <input type="checkbox" id="ev-w" name="ev" value="Walima" checked><label for="ev-w">Walima</label>
-          </div>
-        </fieldset>
-        <label class="f" for="rs-count">Number of guests
-          <select id="rs-count" name="count">
-            <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-          </select>
-        </label>
-        <button class="submit" type="submit">Send reply</button>
-      </form>
-      <p class="thanks" id="thanks" role="status"></p>
-    </div>
-  </section>
-
-  <!-- 9: thank you -->
-  <section class="slide" aria-label="Thank you">
-    <div class="pattern" aria-hidden="true"></div>
-    <div class="arch" aria-hidden="true"></div>
-    <div class="stack">
-      <p class="bism rv" style="--d:.05s">جزاک اللہ خیراً</p>
-      <p class="serif-l rv" style="--d:.2s">Thank you for being part of our day.</p>
-      <button class="share rv" style="--d:.35s" type="button" id="share">Share this invitation</button>
-      <p class="share-note" id="share-note" aria-live="polite"></p>
-      <p class="made rv" style="--d:.5s">Made with Bulawa</p>
-    </div>
-  </section>
-
-  <div class="nav">
-    <button type="button" id="prev" aria-label="Previous card">&#8249;</button>
-    <span class="hint" id="hint">Tap right to continue</span>
-    <button type="button" id="next" aria-label="Next card">&#8250;</button>
+<div class="cover" id="cover">
+  <div class="env" aria-hidden="true">
+    <div class="env-back"></div>
+    <div class="card"><div class="inner"><p>You are invited</p><b>Ayesha &amp; Imran</b><p>Nikah · 20.12.26</p></div></div>
+    <div class="env-front"></div>
+    <div class="env-flap"></div>
   </div>
+  <button class="seal" id="seal" type="button" aria-label="Open the invitation">A&amp;I</button>
+  <button class="cover-cta" id="coverCta" type="button">Open Invitation</button>
 </div>
+
+<main id="top">
+  <section class="intro">
+    <div class="frame-art" aria-hidden="true"></div>
+    <svg class="corner tl" aria-hidden="true"><use href="#corner-art"/></svg>
+    <svg class="corner tr" aria-hidden="true"><use href="#corner-art"/></svg>
+    <svg class="corner bl" aria-hidden="true"><use href="#corner-art"/></svg>
+    <svg class="corner br" aria-hidden="true"><use href="#corner-art"/></svg>
+    <div class="rv">
+      <p class="bism">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+      <p class="bism-en">In the name of Allah, the most Gracious and the most Merciful</p>
+    </div>
+    <p class="small rv d1" style="margin-top: 34px;">Together with their families</p>
+    <h1 class="name rv d2" style="margin-top: 14px;">Ayesha</h1>
+    <span class="amp rv d2">&amp;</span>
+    <h1 class="name rv d3">Imran</h1>
+    <p class="urdu-name rv d3" lang="ur">عائشہ و عمران</p>
+    <p class="lead rv d3" style="margin-top: 26px;">We would like to invite you to celebrate with us the most special day of our lives.</p>
+    <div class="cue rv d3" aria-hidden="true"><div class="bar"></div><span>Scroll</span></div>
+  </section>
+
+  <section class="families">
+    <p class="small rv">With the blessings of</p>
+    <div class="heart rv"><i></i><span>♡</span><i></i></div>
+    <div class="rv d1">
+      <span class="rel">D/o</span>
+      <p class="parents">Mr Imtiaz Khan &amp; Mrs Sumaiya Khan</p>
+    </div>
+    <div class="rv d2" style="margin-top: 22px;">
+      <span class="rel">S/o</span>
+      <p class="parents">Mr Rashid Ali &amp; Mrs Farida Ali</p>
+    </div>
+    <div class="heart rv"><i></i><span>♡</span><i></i></div>
+    <p class="lead rv">request the honour of your presence at the Nikah of their children.</p>
+  </section>
+
+  <section class="reveal-date">
+    <p class="small discover rv">Scratch to discover the date</p>
+    <div class="scratch rv d1" id="scratch">
+      <div class="scratch-date">20<sup>th</sup> DECEMBER 2026</div>
+      <canvas id="scratchCanvas" width="300" height="92" aria-label="Scratch off the card to reveal the date" role="img"></canvas>
+    </div>
+    <p class="scratch-hint" id="scratchHint">Drag your finger across the card</p>
+  </section>
+
+  <section class="countdown">
+    <p class="count-title rv">Days to go...</p>
+    <div class="count rv d1" id="count">
+      <div><b data-k="d">--</b><span>Days</span></div>
+      <div><b data-k="h">--</b><span>Hours</span></div>
+      <div><b data-k="m">--</b><span>Minutes</span></div>
+      <div><b data-k="s">--</b><span>Secs</span></div>
+    </div>
+  </section>
+
+  <section class="events">
+    <h2 class="events-title rv">Events &amp; Venues</h2>
+    <article class="event rv">
+      <h3>MEHNDI</h3>
+      <p class="time">Friday, 18 December · 7:00 PM</p>
+      <p class="place">Garden Pavilion, Banjara Hills</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Garden+Pavilion+Banjara+Hills" target="_blank" rel="noopener">Open in Maps</a>
+      <p class="dress-line">Yellow and green</p>
+    </article>
+    <article class="event rv d1">
+      <h3>NIKAH</h3>
+      <p class="time">Sunday, 20 December · 6:00 PM</p>
+      <p class="place">Al-Noor Hall, Banjara Hills</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Al-Noor+Hall+Banjara+Hills" target="_blank" rel="noopener">Open in Maps</a>
+      <p class="dress-line">Pastels and soft shades</p>
+    </article>
+    <article class="event rv d2">
+      <h3>WALIMA</h3>
+      <p class="time">Monday, 21 December · 8:00 PM</p>
+      <p class="place">The Crystal Lawns, Jubilee Hills</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=The+Crystal+Lawns+Jubilee+Hills" target="_blank" rel="noopener">Open in Maps</a>
+      <p class="dress-line">Royal and elegant shades</p>
+    </article>
+    <p class="venue-note rv">Tap a button to open the venue in Google Maps</p>
+  </section>
+
+  <section class="dress">
+    <p class="dress-cap rv">— Dress code —</p>
+    <p class="dress-lead rv">We kindly encourage our guests to wear these colours for our special days.</p>
+    <div class="carousel rv d1" id="carousel">
+      <div class="track" id="track">
+        <div class="slide-card">
+          <h3>Nikah</h3>
+          <p class="mood">Pastel and soft shades</p>
+          <div class="swatches">
+            <div><i style="background:#F4C2C2"></i><small>BLUSH PINK</small></div>
+            <div><i style="background:#F9F6F0; border-color:#E5E0D5"></i><small>OFF WHITE</small></div>
+            <div><i style="background:#E6D7B8"></i><small>CREAM BEIGE</small></div>
+            <div><i style="background:#FAD6A5"></i><small>PEACH</small></div>
+          </div>
+          <p class="date">Sunday, 20 December 2026</p>
+        </div>
+        <div class="slide-card">
+          <h3>Walima</h3>
+          <p class="mood">Royal and elegant shades</p>
+          <div class="swatches">
+            <div><i style="background:#610B14"></i><small>BURGUNDY</small></div>
+            <div><i style="background:#4A0A10"></i><small>MAROON</small></div>
+            <div><i style="background:#D4AF37"></i><small>ROYAL GOLD</small></div>
+            <div><i style="background:#E8DFCD; border-color:#610B14"></i><small>CHAMPAGNE</small></div>
+          </div>
+          <p class="date">Monday, 21 December 2026</p>
+        </div>
+      </div>
+    </div>
+    <div class="dots rv" id="dots">
+      <button type="button" aria-label="Show Nikah colours" aria-current="true" data-i="0"></button>
+      <button type="button" aria-label="Show Walima colours" aria-current="false" data-i="1"></button>
+    </div>
+  </section>
+
+  <section class="rsvp-sec">
+    <p class="small rv">Kindly reply by 1 December</p>
+    <h2 class="events-title rv" style="margin-top: 10px;">Will you join us?</h2>
+    <form class="rsvp rv d1" id="rsvp" autocomplete="off">
+      <label for="rs-name">Your name
+        <input id="rs-name" type="text" required maxlength="60" placeholder="e.g. Sana Khan">
+      </label>
+      <fieldset>
+        <legend>Which events?</legend>
+        <div class="chips">
+          <input type="checkbox" id="ev-m" name="ev" value="Mehndi"><label for="ev-m">Mehndi</label>
+          <input type="checkbox" id="ev-n" name="ev" value="Nikah" checked><label for="ev-n">Nikah</label>
+          <input type="checkbox" id="ev-w" name="ev" value="Walima" checked><label for="ev-w">Walima</label>
+        </div>
+      </fieldset>
+      <label for="rs-count">Number of guests
+        <select id="rs-count">
+          <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+        </select>
+      </label>
+      <button class="submit" type="submit">Send reply</button>
+    </form>
+    <p class="thanks" id="thanks" role="status"></p>
+  </section>
+
+  <footer>
+    <p>With love, Ayesha &amp; Imran</p>
+    <span class="made">Made with Bulawa</span>
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
 
 <script>
 (function () {
-  var frame = document.getElementById('frame');
-  var slides = Array.prototype.slice.call(frame.querySelectorAll('.slide'));
-  var bar = document.getElementById('progress');
-  var prevBtn = document.getElementById('prev');
-  var nextBtn = document.getElementById('next');
-  var hint = document.getElementById('hint');
-  var cur = 0;
-  var last = slides.length - 1;
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cover = document.getElementById('cover');
+  var seal = document.getElementById('seal');
+  var cta = document.getElementById('coverCta');
+  document.body.classList.add('locked');
 
-  // Progress segments, one per card.
-  slides.forEach(function (_, i) {
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.setAttribute('aria-label', 'Card ' + (i + 1));
-    b.addEventListener('click', function (e) { e.stopPropagation(); go(i); });
-    bar.appendChild(b);
-  });
-  var segs = Array.prototype.slice.call(bar.children);
-
-  function go(i) {
-    cur = Math.max(0, Math.min(last, i));
-    slides.forEach(function (s, k) { s.classList.toggle('on', k === cur); });
-    segs.forEach(function (s, k) { s.classList.toggle('done', k <= cur); });
-    prevBtn.disabled = cur === 0;
-    nextBtn.disabled = cur === last;
-    hint.textContent = cur === 0 ? 'Tap to open' : cur === last ? 'The end' : 'Tap right to continue';
+  // Cover: open the envelope, then release the page.
+  var opened = false;
+  function openInvite() {
+    if (opened) return;
+    opened = true;
+    cover.classList.add('opening');
+    setTimeout(function () { cover.classList.add('gone'); document.body.classList.remove('locked'); }, reduce ? 0 : 1100);
   }
-  function next() { go(cur + 1); }
-  function prev() { go(cur - 1); }
+  seal.addEventListener('click', openInvite);
+  cta.addEventListener('click', openInvite);
 
-  frame.querySelectorAll('[data-next]').forEach(function (b) {
-    b.addEventListener('click', function (e) { e.stopPropagation(); next(); });
-  });
-  nextBtn.addEventListener('click', next);
-  prevBtn.addEventListener('click', prev);
-
-  // Tap the right side to go on, the left side to go back. Taps on controls do nothing extra.
-  var interactive = 'button, a, input, select, label, textarea, form, fieldset';
-  frame.addEventListener('click', function (e) {
-    if (e.target.closest(interactive) || e.target.closest('.nav, .progress')) return;
-    var r = frame.getBoundingClientRect();
-    if (e.clientX - r.left > r.width * 0.35) next(); else prev();
-  });
-
-  // Swipe left or right.
-  var sx = null, sy = null;
-  frame.addEventListener('touchstart', function (e) {
-    if (e.target.closest(interactive)) { sx = null; return; }
-    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
-  }, { passive: true });
-  frame.addEventListener('touchend', function (e) {
-    if (sx === null) return;
-    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
-    sx = null;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) next(); else prev(); }
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight') next();
-    if (e.key === 'ArrowLeft') prev();
-  });
+  // Sections fade up as they arrive.
+  var items = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
 
   // Countdown to the Nikah, 6:00 pm on 20 December 2026.
   var target = new Date(2026, 11, 20, 18, 0, 0).getTime();
@@ -478,39 +471,91 @@ fieldset legend { font-size: .78rem; font-weight: 700; letter-spacing: .08em; te
   tick();
   setInterval(tick, 1000);
 
-  // RSVP: this sample only shows a confirmation. Live invitations send replies to the host.
+  // Scratch card: rub away the metallic layer; once enough is gone, reveal the date.
+  var canvas = document.getElementById('scratchCanvas');
+  var ctx = canvas.getContext('2d', { willReadFrequently: true });
+  var hint = document.getElementById('scratchHint');
+  var grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  grad.addColorStop(0, '#610B14'); grad.addColorStop(0.2, '#B49A72'); grad.addColorStop(0.45, '#EFE3CF');
+  grad.addColorStop(0.6, '#FFF5DF'); grad.addColorStop(0.8, '#D2C1A5'); grad.addColorStop(1, '#610B14');
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'rgba(255,255,255,.05)';
+  for (var i = 0; i < 600; i++) ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1);
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.lineWidth = 26;
+
+  var drawing = false, lx = 0, ly = 0, done = false, lastCheck = 0;
+  function pos(e) {
+    var r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * (canvas.width / r.width), y: (e.clientY - r.top) * (canvas.height / r.height) };
+  }
+  function scratchedRatio() {
+    var d = ctx.getImageData(0, 0, canvas.width, canvas.height).data, n = 0, total = d.length / 4;
+    for (var k = 3; k < d.length; k += 16) if (d[k] < 50) n++;
+    return n / (total / 4);
+  }
+  canvas.addEventListener('pointerdown', function (e) {
+    if (done) return;
+    drawing = true; canvas.setPointerCapture(e.pointerId);
+    var p = pos(e); lx = p.x; ly = p.y;
+    ctx.beginPath(); ctx.arc(lx, ly, 13, 0, Math.PI * 2); ctx.fill();
+    hint.classList.add('hide');
+  });
+  canvas.addEventListener('pointermove', function (e) {
+    if (!drawing || done) return;
+    var p = pos(e);
+    ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(p.x, p.y); ctx.stroke();
+    lx = p.x; ly = p.y;
+    var now = Date.now();
+    if (now - lastCheck > 150) {
+      lastCheck = now;
+      if (scratchedRatio() > 0.25) finish();
+    }
+  });
+  function stopDrawing() { drawing = false; }
+  canvas.addEventListener('pointerup', stopDrawing);
+  canvas.addEventListener('pointercancel', stopDrawing);
+
+  function finish() {
+    if (done) return;
+    done = true;
+    canvas.classList.add('done');
+    if (typeof confetti === 'function' && !reduce) {
+      confetti({ particleCount: 160, spread: 110, origin: { y: 0.5 }, colors: ['#610B14', '#610B14', '#F7F0E3', '#A68B5B', '#D4AF37'], scalar: 1.1, ticks: 200 });
+    }
+  }
+
+  // Dress code carousel: slides itself, and the dots jump to a slide.
+  var track = document.getElementById('track');
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#dots button'));
+  var idx = 0, timer = null;
+  function show(n) {
+    idx = n % dots.length;
+    track.style.transform = 'translateX(-' + (idx * 50) + '%)';
+    dots.forEach(function (d, k) { d.setAttribute('aria-current', String(k === idx)); });
+  }
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () { show(+d.dataset.i); restart(); });
+  });
+  function restart() { clearInterval(timer); if (!reduce) timer = setInterval(function () { show(idx + 1); }, 4200); }
+  restart();
+
+  // RSVP: a sample only shows a confirmation. Live invitations send replies to the hosts.
   var form = document.getElementById('rsvp');
   var thanks = document.getElementById('thanks');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var name = document.getElementById('rs-name').value.trim();
-    if (!name) { document.getElementById('rs-name').focus(); return; }
+    var nameEl = document.getElementById('rs-name');
+    var name = nameEl.value.trim();
+    if (!name) { nameEl.focus(); return; }
     var evs = Array.prototype.slice.call(form.querySelectorAll('input[name="ev"]:checked')).map(function (c) { return c.value; });
     var n = document.getElementById('rs-count').value;
     thanks.textContent = evs.length
       ? 'Shukriya, ' + name + '. We have noted ' + n + (n === '1' ? ' guest' : ' guests') + ' for ' + evs.join(', ') + '.'
-      : 'Shukriya, ' + name + '. We are sorry you cannot make it. We will miss you.';
+      : 'Shukriya, ' + name + '. We are sorry you cannot join us. You will be missed.';
     form.classList.add('hide');
     thanks.classList.add('show');
   });
-
-  // Share: copy the link where clipboard access is allowed; otherwise show it as text.
-  var shareBtn = document.getElementById('share');
-  var note = document.getElementById('share-note');
-  shareBtn.addEventListener('click', function () {
-    var url = location.href;
-    try {
-      navigator.clipboard.writeText(url).then(function () {
-        note.textContent = 'Link copied.';
-      }, function () {
-        note.textContent = 'Select and copy the link from the address bar.';
-      });
-    } catch (err) {
-      note.textContent = 'Select and copy the link from the address bar.';
-    }
-  });
-
-  go(0);
 })();
 </script>
 
