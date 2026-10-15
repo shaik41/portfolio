@@ -7,6 +7,7 @@ Static site, no build tools. Deploy the `site/` folder as is.
 | `/` | `index.html` | Bulawa landing page (rough mockup) |
 | `/wedding` | `wedding/index.html` | Picker for the two sample invitations |
 | `/wedding/noor` | `wedding/noor/index.html` | Noor: burgundy and cream florals, gatefold doors, petals |
+| `/wedding/zardozi` | `wedding/zardozi/index.html` | Zardozi: traditional red and gold Nikah scroll, twirling couple, Sheesh Mahal venue |
 | `/wedding/shahi` | `wedding/shahi/index.html` | Shahi: a gold line-drawn palace in ruby, gold dust |
 
 ## Editing
@@ -32,6 +33,9 @@ Either:
 
 `vercel.json` turns on clean URLs (`/wedding/noor` rather than `/wedding/noor/index.html`), and
 `.vercelignore` keeps the `page.html` copies and this README out of the deployment.
+
+Every template lights up where you tap, labels the tap target, and shows "Scroll down" until the guest
+first scrolls. The Zardozi venue photo is by Gpkp, CC BY-SA 4.0, via Wikimedia Commons (cropped).
 
 RSVP and Add to Calendar work without a backend: the RSVP shows a confirmation only, and the
 calendar buttons open Google Calendar or Outlook with the event filled in.

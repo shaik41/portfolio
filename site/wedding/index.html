@@ -2,15 +2,15 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Two sample wedding invitations by Bulawa: Noor, florals in burgundy and cream, and Shahi, a ruby palace in gold.">
+<meta name="description" content="Sample wedding invitations by Bulawa: Noor, florals in burgundy and cream; Zardozi, a traditional red and gold Nikah scroll; and Shahi, a ruby palace in gold.">
 <meta name="theme-color" content="#140A0E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bulawa · Sample Wedding Invitations">
-<meta property="og:description" content="Open Noor, florals in burgundy and cream, or Shahi, a ruby palace in gold.">
+<meta property="og:description" content="Open Noor, Zardozi or Shahi and see how your guests will open your invitation.">
 <title>Bulawa Wedding Samples</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Montserrat:wght@500;600&family=Pinyon+Script&family=Playfair+Display:ital@1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Montserrat:wght@500;600&family=Pinyon+Script&family=Amiri&family=Playfair+Display:ital@1&display=swap">
 <style>
 /* Two doors into two invitations: each card wears its own template's paper, ink and type. */
 :root {
@@ -39,8 +39,9 @@ header { text-align: center; max-width: 520px; }
 h1 { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2.2rem, 8vw, 3rem); line-height: 1.1; margin-top: 12px; text-wrap: balance; }
 header p { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.15rem; color: var(--muted); margin-top: 10px; }
 
-.cards { display: grid; gap: 22px; width: 100%; max-width: 860px; grid-template-columns: 1fr; }
+.cards { display: grid; gap: 22px; width: 100%; max-width: 1160px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1100px) { .cards { grid-template-columns: repeat(3, 1fr); } }
 .card {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   min-height: 420px; padding: 44px 26px; text-decoration: none; overflow: hidden; border-radius: 6px;
@@ -81,9 +82,22 @@ header p { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.15rem
 .skyline { width: 150px; height: auto; margin-bottom: 16px; overflow: visible; }
 .skyline path { fill: none; stroke: var(--shahi-gold); stroke-width: 1; }
 
+.zardozi { background: radial-gradient(110% 80% at 50% 45%, #A3141F, #5E0710 60%, #2A0307); color: #FBEFD9; box-shadow: 0 24px 60px rgba(0, 0, 0, .55); }
+.zardozi::before { border-color: #D4AF37; border-width: 2px; }
+.zardozi::after { border-color: #D4AF37; border-style: dotted; border-width: 2px; opacity: .6; }
+.zardozi .kicker { color: #F6E3A1; }
+.zardozi .bism { font-family: "Amiri", serif; font-size: 1.3rem; direction: rtl; color: #F6E3A1; margin-bottom: 10px; }
+.zardozi .name {
+  font-family: "Great Vibes", cursive; font-size: 4.4rem; line-height: 1.15; margin-top: 4px;
+  background: var(--foil); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: foil 7s linear infinite;
+}
+.zardozi .couple { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; color: rgba(251, 239, 217, .85); }
+.zardozi .cta { border-color: #D4AF37; color: #F6E3A1; }
+.zardozi:hover .cta { background: #D4AF37; color: #2A0307; }
 footer { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); text-align: center; }
 footer a { color: var(--shahi-gold); text-underline-offset: 4px; }
-@media (prefers-reduced-motion: reduce) { .shahi .name { animation: none; } .card { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .shahi .name, .zardozi .name { animation: none; } .card { transition: none; } }
 </style>
 
 <header>
@@ -98,6 +112,13 @@ footer a { color: var(--shahi-gold); text-underline-offset: 4px; }
     <span class="kicker">Florals in burgundy and cream</span>
     <span class="name">Noor</span>
     <span class="couple">Ayesha &amp; Imran · 20 December 2026</span>
+    <span class="cta">Open invitation</span>
+  </a>
+  <a class="card zardozi" href="/wedding/zardozi">
+    <span class="bism" lang="ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
+    <span class="kicker">A traditional red and gold Nikah</span>
+    <span class="name">Zardozi</span>
+    <span class="couple">Mehreen &amp; Adnan · 23 January 2027</span>
     <span class="cta">Open invitation</span>
   </a>
   <a class="card shahi" href="/wedding/shahi">

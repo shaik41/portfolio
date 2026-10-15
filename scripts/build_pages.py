@@ -19,6 +19,11 @@ PAGES = {
         "description": "Together with their families, Ayesha & Imran invite you to their Nikah on Sunday, 20 December 2026. Tap to open.",
         "theme": "#F4EDE0",
     },
+    "wedding/zardozi/page.html": {
+        "title": "Mehreen & Adnan · Nikah Invitation",
+        "description": "Bismillah. Together with their families, Mehreen & Adnan invite you to their Nikah on Saturday, 23 January 2027 at Palace Sheesh Mahal, Bengaluru. Tap to open.",
+        "theme": "#5E0710",
+    },
     "wedding/shahi/page.html": {
         "title": "Zoya & Rayyan · Wedding Invitation",
         "description": "The honour of your presence is requested at the Nikah of Zoya & Rayyan on Friday, 12 February 2027. Tap to enter.",
