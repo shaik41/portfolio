@@ -24,6 +24,11 @@ PAGES = {
         "description": "Bismillah. Together with their families, Mehreen & Adnan invite you to their Nikah on Saturday, 23 January 2027 at Palace Sheesh Mahal, Bengaluru. Tap to open.",
         "theme": "#5E0710",
     },
+    "wedding/pari/page.html": {
+        "title": "Aara turns One · A Fairy-Tale Birthday Invitation",
+        "description": "Once upon a time, a little princess came into our world. Aara is turning one! Open the storybook for a royal celebration on Saturday, 14 November 2026.",
+        "theme": "#1F1A40",
+    },
     "wedding/shahi/page.html": {
         "title": "Zoya & Rayyan · Wedding Invitation",
         "description": "The honour of your presence is requested at the Nikah of Zoya & Rayyan on Friday, 12 February 2027. Tap to enter.",

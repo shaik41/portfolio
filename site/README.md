@@ -9,6 +9,7 @@ Static site, no build tools. Deploy the `site/` folder as is.
 | `/wedding/noor` | `wedding/noor/index.html` | Noor: burgundy and cream florals, gatefold doors, petals |
 | `/wedding/zardozi` | `wedding/zardozi/index.html` | Zardozi: traditional red and gold Nikah scroll, twirling couple, Sheesh Mahal venue |
 | `/wedding/shahi` | `wedding/shahi/index.html` | Shahi: a gold line-drawn palace in ruby, gold dust |
+| `/wedding/pari` | `wedding/pari/index.html` | Pari: a first-birthday storybook; drag the pages like a notebook, scratch the golden seal and the date, realistic castle and fairies |
 
 ## Editing
 

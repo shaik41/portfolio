@@ -2,11 +2,11 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Sample wedding invitations by Bulawa: Noor, florals in burgundy and cream; Zardozi, a traditional red and gold Nikah scroll; and Shahi, a ruby palace in gold.">
+<meta name="description" content="Sample invitations by Bulawa: Noor, florals in burgundy and cream; Zardozi, a traditional red and gold Nikah scroll; Shahi, a ruby palace in gold; and Pari, a fairy-tale first birthday storybook.">
 <meta name="theme-color" content="#140A0E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bulawa · Sample Wedding Invitations">
-<meta property="og:description" content="Open Noor, Zardozi or Shahi and see how your guests will open your invitation.">
+<meta property="og:description" content="Open Noor, Zardozi, Shahi or Pari and see how your guests will open your invitation.">
 <title>Bulawa Wedding Samples</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,9 +39,9 @@ header { text-align: center; max-width: 520px; }
 h1 { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2.2rem, 8vw, 3rem); line-height: 1.1; margin-top: 12px; text-wrap: balance; }
 header p { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.15rem; color: var(--muted); margin-top: 10px; }
 
-.cards { display: grid; gap: 22px; width: 100%; max-width: 1160px; grid-template-columns: 1fr; }
+.cards { display: grid; gap: 22px; width: 100%; max-width: 1240px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .cards { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1100px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1100px) { .cards { grid-template-columns: repeat(4, 1fr); } }
 .card {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   min-height: 420px; padding: 44px 26px; text-decoration: none; overflow: hidden; border-radius: 6px;
@@ -95,6 +95,14 @@ header p { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.15rem
 .zardozi .couple { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; color: rgba(251, 239, 217, .85); }
 .zardozi .cta { border-color: #D4AF37; color: #F6E3A1; }
 .zardozi:hover .cta { background: #D4AF37; color: #2A0307; }
+.pari { background: radial-gradient(110% 80% at 50% 30%, #4A3A86, #2B1E52 60%, #140E2E); color: #F8EFDC; box-shadow: 0 24px 60px rgba(0, 0, 0, .55); }
+.pari::before, .pari::after { border-color: #C9A24A; }
+.pari .kicker { color: #E8C877; }
+.pari .name { font-family: "Pinyon Script", cursive; font-size: 4.4rem; line-height: 1.1; margin-top: 8px; color: #E8C877; }
+.pari .couple { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; color: rgba(248, 239, 220, .85); }
+.pari .cta { border-color: #E8C877; color: #F3DFA2; }
+.pari:hover .cta { background: #E8C877; color: #2B1E52; }
+.crown { width: 54px; height: auto; margin-bottom: 16px; fill: #E8C877; }
 footer { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); text-align: center; }
 footer a { color: var(--shahi-gold); text-underline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) { .shahi .name, .zardozi .name { animation: none; } .card { transition: none; } }
@@ -102,7 +110,7 @@ footer a { color: var(--shahi-gold); text-underline-offset: 4px; }
 
 <header>
   <p class="brand">Bulawa</p>
-  <h1>Sample wedding invitations</h1>
+  <h1>Sample invitations</h1>
   <p>Open one on your phone to see it the way your guests will.</p>
 </header>
 
@@ -136,6 +144,13 @@ footer a { color: var(--shahi-gold); text-underline-offset: 4px; }
     <span class="name">Shahi</span>
     <span class="couple">Zoya &amp; Rayyan · 12 February 2027</span>
     <span class="cta">Open invitation</span>
+  </a>
+  <a class="card pari" href="/wedding/pari">
+    <svg class="crown" viewBox="0 0 64 44" aria-hidden="true"><path d="M6 38 L4 12 L18 24 L32 4 L46 24 L60 12 L58 38 Z"/></svg>
+    <span class="kicker">A fairy-tale first birthday</span>
+    <span class="name">Pari</span>
+    <span class="couple">Aara turns One · 14 November 2026</span>
+    <span class="cta">Open the storybook</span>
   </a>
 </main>
 
