@@ -5,7 +5,7 @@ Static site, no build tools. Deploy the `site/` folder as is.
 | URL | File | What it is |
 | --- | --- | --- |
 | `/` | `index.html` | Bulawa landing page (rough mockup) |
-| `/wedding` | `wedding/index.html` | Picker for the two sample invitations |
+| `/wedding` | `wedding/index.html` | Picker for the sample invitations |
 | `/wedding/noor` | `wedding/noor/index.html` | Noor: burgundy and cream florals, gatefold doors, petals |
 | `/wedding/zardozi` | `wedding/zardozi/index.html` | Zardozi: traditional red and gold Nikah scroll, twirling couple, Sheesh Mahal venue |
 | `/wedding/shahi` | `wedding/shahi/index.html` | Shahi: a gold line-drawn palace in ruby, gold dust |
